@@ -1,0 +1,110 @@
+// TruthForge — esquema inicial (MVP: Laboratorio + cuentas).
+// Modelos PRD: Usuario, Ejercicio, Intento, Reto, Logro (+ Lección para Aprender).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  xp           Int      @default(0)
+  streak       Int      @default(0)
+  lastStudyAt  DateTime?
+  createdAt    DateTime @default(now())
+
+  refreshTokens RefreshToken[]
+  attempts      Attempt[]
+  achievements  UserAchievement[]
+  authored      Exercise[]        @relation("AuthoredExercises")
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Lesson {
+  id      String @id @default(cuid())
+  slug    String @unique
+  title   String
+  goal    String
+  rule    String
+  example String
+  order   Int
+
+  exercises Exercise[]
+}
+
+model Exercise {
+  id         String   @id @default(cuid())
+  slug       String?  @unique // id estable del currículum (fun-1…); null = creado por usuario
+  prompt     String
+  formula    String
+  kind       String   // value | classify | table
+  assignment Json?
+  levelId    String?
+  level      Lesson?  @relation(fields: [levelId], references: [id])
+  authorId   String?
+  author     User?    @relation("AuthoredExercises", fields: [authorId], references: [id])
+  createdAt  DateTime @default(now())
+
+  attempts Attempt[]
+}
+
+model Attempt {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  answer     Json
+  correct    Boolean
+  xpEarned   Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([exerciseId])
+}
+
+model Achievement {
+  id          String @id @default(cuid())
+  slug        String @unique
+  name        String
+  description String
+  xpReward    Int    @default(0)
+
+  users UserAchievement[]
+}
+
+model UserAchievement {
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievementId String
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  earnedAt      DateTime    @default(now())
+
+  @@id([userId, achievementId])
+}
+
+// Retos multijugador (PRD RF-06): tabla lista, tiempo real en fase post-MVP.
+model Challenge {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  status    String   @default("open") // open | playing | finished
+  formula   String
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,23 @@
+{
+  "name": "truthforge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TruthForge — laboratorio personal de lógica proposicional: aprender, practicar y dominar tablas de verdad.",
+  "type": "module",
+  "workspaces": [
+    "frontend",
+    "backend",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:engine": "npm --workspace @truthforge/logic-engine run test",
+    "build:engine": "npm --workspace @truthforge/logic-engine run build",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,47 @@
+<svg width="64" height="64" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tf-cyan-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#00F0FF" />
+      <stop offset="100%" stopColor="#0EA5E9" />
+    </linearGradient>
+    <linearGradient id="tf-bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#0b172d" />
+      <stop offset="100%" stopColor="#030712" />
+    </linearGradient>
+  </defs>
+
+  <!-- Hexagonal Outer Shield -->
+  <polygon
+    points="50,4 90,26 90,74 50,96 10,74 10,26"
+    fill="url(#tf-bg-grad)"
+    stroke="url(#tf-cyan-grad)"
+    stroke-width="5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Anvil Base -->
+  <path
+    d="M 24 72 L 76 72 L 70 62 L 60 62 L 56 52 L 44 52 L 40 62 L 30 62 Z"
+    fill="none"
+    stroke="#00F0FF"
+    stroke-width="3"
+    opacity="0.85"
+  />
+
+  <!-- AND Logic Gate -->
+  <line x1="24" y1="36" x2="38" y2="36" stroke="#00F0FF" stroke-width="4" stroke-linecap="round" />
+  <line x1="24" y1="46" x2="38" y2="46" stroke="#00F0FF" stroke-width="4" stroke-linecap="round" />
+  <path
+    d="M 38 30 L 52 30 C 64 30, 68 36, 68 41 C 68 46, 64 52, 52 52 L 38 52 Z"
+    fill="rgba(0, 240, 255, 0.2)"
+    stroke="#00F0FF"
+    stroke-width="4"
+    stroke-linejoin="round"
+  />
+  <line x1="68" y1="41" x2="80" y2="41" stroke="#00F0FF" stroke-width="4" stroke-linecap="round" />
+
+  <!-- Logic Signal Dots -->
+  <circle cx="24" cy="36" r="3.5" fill="#10B981" />
+  <circle cx="24" cy="46" r="3.5" fill="#10B981" />
+  <circle cx="80" cy="41" r="4" fill="#00F0FF" />
+</svg>
