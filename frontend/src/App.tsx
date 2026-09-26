@@ -183,7 +183,7 @@ export default function App() {
           </div>
         )}
 
-        <main className="mx-auto max-w-7xl w-full px-3 py-4 sm:px-6 sm:py-8 flex-1">
+        <main className="mx-auto max-w-7xl w-full px-3 py-4 sm:px-6 sm:py-8 flex-1 min-w-0 overflow-x-hidden">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/resolver" element={<LabPage />} />
